@@ -20,16 +20,20 @@ message = ''
 client_id="3H021OQ8ZI-100"
 secret_key="PPEJLUL3HA"
 # redirect_uri="https://trade.fyers.in/api-login/redirect-uri/index.html"http://127.0.0.1:5000
-redirect_uri="http://127.0.0.1:5000/createsession"
+redirect_uri="https://algowice.tech/createsession"
 response_type="code"
 grant_type="authorization_code"
 state="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9sdfhioehskdfjhsurhs.eyJpc3MiOiJhcGkubG9naskjhekshfksdhfsheufW4uZnllcnMuaW4iLCJpYXQiskdfjhskefksuefsfOjE2OTA3Mjk0MzQsImV4cCI6MTY5MDc1OTQzNCwibmJmIjoxNjkwNzI4ODM0LCJhdWQiOiJbXCJ4OjBcIiwgXCJ4OjFcIiwgXCJ4OjJcIiwgXCJkOjFcIiwgXCJkOjJcIiwgXCJ4OjFcIiwgXCJ4OjBcIl0iLCJzdWIiOiJhdXRoX2NvZGUiLCJkaXNwbGF5X25hbWUiOiJYRDA4Njg1Iiwib21zIjoiSzEiLCJoc21fa2V5IjoiYjVkOTdlYTE1YmY5MWRhMzUxOTJmODUzZTNiNWQ2YTEwMGQyYzc2OTEwMTk3MjIyZWVlZjY5ZjIiLCJub25jZSI6IiIsImFwcF9pZCI6IjNIMDIxT1E4WkkiLCJ1dWlkIjoiMzJjZDI1MDEzNWEyNDc3NWI5YzI1NzY2MGUyZGNiZWYiLCJpcEFkZHIiOiIwLjAuMC4wIiwic2NvcGUiOiIifQ._vG9oFXxZfzl1Ux0G6-timgKcG046U7hbnH8Q"
-auth = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9sdfhioehskdfjhsurhs.eyJpc3MiOiJhcGkubG9naskjhekshfksdhfsheufW4uZnllcnMuaW4iLCJpYXQiskdfjhskefksuefsfOjE2OTA3Mjk0MzQsImV4cCI6MTY5MDc1OTQzNCwibmJmIjoxNjkwNzI4ODM0LCJhdWQiOiJbXCJ4OjBcIiwgXCJ4OjFcIiwgXCJ4OjJcIiwgXCJkOjFcIiwgXCJkOjJcIiwgXCJ4OjFcIiwgXCJ4OjBcIl0iLCJzdWIiOiJhdXRoX2NvZGUiLCJkaXNwbGF5X25hbWUiOiJYRDA4Njg1Iiwib21zIjoiSzEiLCJoc21fa2V5IjoiYjVkOTdlYTE1YmY5MWRhMzUxOTJmODUzZTNiNWQ2YTEwMGQyYzc2OTEwMTk3MjIyZWVlZjY5ZjIiLCJub25jZSI6IiIsImFwcF9pZCI6IjNIMDIxT1E4WkkiLCJ1dWlkIjoiMzJjZDI1MDEzNWEyNDc3NWI5YzI1NzY2MGUyZGNiZWYiLCJpcEFkZHIiOiIwLjAuMC4wIiwic2NvcGUiOiIifQ._vG9oFXxZfzl1Ux0G6-timgKcG046U7hbnH8QXXujsY"
+auth = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.easdasdasyJpc3MiOiJhcGkubG9naW4uZnllcnMasduaW4iLCJpYXQiOjE2OTA3Mjk0MzQsImV4cCI6MTY5MDc1OTQzNCwibmJmIjoxNjkwNzI4ODM0LCJhdWQiOiJbXCJ4OjBcIiwgXCJ4OjFcIiwgXCJ4OjJcIiwgXCJkOjFcIiwgXCJkOjJcIiwgXCJ4OjFcIiwgXCJ4OjBcIl0iLCJzdWIiOiJhdXRoX2NvZGUiLCJkaXNwbGF5X25hbWUiOiJYRDA4Njg1Iiwib21zIjoiSzEiLCJoc21fa2V5IjoiYjVkOTdlYTE1YmY5MWRhMzUxOTJmODUzZTNiNWQ2YTEwMGQyYzc2OTEwMTk3MjIyZWVlZjY5ZjIiLCJub25jZSI6IiIsImFwcF9pZCI6IjNIMDIxT1E4WkkiLCJ1dWlkIjoiMzJjZDI1MDEzNWEyNDc3NWI5YzI1NzY2MGUyZGNiZWYiLCJpcEFkZHIiOiIwLjAuMC4wIiwic2NvcGUiOiIifQ.sasadsadsad.sadsad-_vG9oFXxZfzl1Ux0G6-timgKcG046U7hbnH8QXXujsY"
 #Interceptor for authentication
 @app.before_request
 def before_request_func():
     if request.path.startswith('/createsession') :
-        return request
+        stateRes = request.args.get('state')
+        if stateRes == state:
+            return request 
+        else:
+            return jsonify({'message':'not authenticated'}),404
     authTocken = request.headers.get('Authorization')
     if authTocken != auth :
         return jsonify({'message':'not authenticated'}),404
